@@ -1,4 +1,6 @@
- public class SinglyLinkedList{
+import java.util.List;
+
+public class SinglyLinkedList{
     ListNode head;
     private static class ListNode{
         private int data;
@@ -30,24 +32,38 @@
         }
         return count;
     }
-  //method when you add element at the start of the list
+    //method where you add element at the start of the list
     void addFirst(int val){
         ListNode newNode = new ListNode(val);
         newNode.next = head;
         head = newNode;
     }
+    //Method where you add element at the end of the list
+    void addLast(int val){
+        ListNode newNode = new ListNode(val);
+        if(head == null){
+            head = newNode;
+            return;
+        }
+        ListNode current = head;
+        while(null != current.next){
+            current = current.next;
+        }
+        current.next = newNode;
+    }
     public static void main(String[] args) {
-    SinglyLinkedList sll = new SinglyLinkedList();
-    ListNode second = new ListNode(4);
-    ListNode third = new ListNode(3);
-    ListNode fourth = new ListNode(7);
-    sll.head = new ListNode(5);
-    sll.head.next = second;
-    second.next = third;
-    third.next = fourth;
-    sll.printList();
-    System.out.println("\n"+"List length: "+sll.length());
-    sll.addFirst(6);
-    sll.printList();
+        SinglyLinkedList sll = new SinglyLinkedList();
+        ListNode second = new ListNode(4);
+        ListNode third = new ListNode(3);
+        ListNode fourth = new ListNode(7);
+        sll.head = new ListNode(5);
+        sll.head.next = second;
+        second.next = third;
+        third.next = fourth;
+        sll.printList();
+        System.out.println("\n"+"List length: "+sll.length());
+        sll.addFirst(6);
+        sll.addLast(10);
+        sll.printList();
     }
 }
