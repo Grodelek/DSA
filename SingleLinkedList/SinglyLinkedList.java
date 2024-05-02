@@ -1,69 +1,114 @@
-import java.util.List;
-
-public class SinglyLinkedList{
-    ListNode head;
-    private static class ListNode{
-        private int data;
-        private ListNode next;
-        ListNode(int data){
-            this.data = data;
-            this.next = null;
-        }
+public class Ll{
+    Node head;
+    Node tail;
+    private int size;
+    Ll(){
+        this.size = 0;
     }
-    //Method for printing list elements
-    void printList(){
-        ListNode temp = head;
+    public void addFirst(int val){
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+        if(tail == null){
+            tail = head;
+        }
+        size += 1;
+    }
+    public void addLast(int val){
+        if(tail == null){
+            addFirst(val);
+            return;
+        }
+        Node node = new Node(val);
+        tail.next = node;
+        tail = node;
+        size += 1;
+    }
+    public void addIndexOf(int val, int index){
+        if(index == 0){
+            addFirst(val);
+            return;
+        }
+        if(index == size){
+            addLast(val);
+            return;
+        }
+        Node temp = head;
+        for(int i=1; i<index; i++){
+            temp = temp.next;
+        }
+        Node node = new Node(val,temp.next);
+        temp.next = node;
+        size++;
+    }
+    public int deleteFirst(){
+        int val = head.val;
+        head = head.next;
+        if(head == null){
+            tail = null;
+        }
+        size--;
+        return val;
+    }
+    public int deleteLast(){
+        if(size <= 1){
+            deleteFirst();
+        }
+        Node node = get(size - 2);
+        int val =  tail.val;
+        tail = node;
+        tail.next = null;
+         size--;
+         return val;
+    }
+    public int deleteIndexOf(int index){
+        if(index == 0){
+            deleteFirst();
+        }
+        if(index == size-1){
+            deleteLast();
+        }
+        Node nodeP = get(index - 1);
+        int val = nodeP.next.val;
+        nodeP.next = nodeP.next.next;
+
+        size--;
+        return val;
+    }
+    public Node get(int index){
+        Node temp = head;
+        for(int i=0; i<index; i++){
+            temp = temp.next;
+        }
+        return temp;
+    }
+    public Node find(int value){
+        Node node = head;
+        while(node != null){
+            if(node.val == value){
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+    public void print(){
+        Node temp = head;
         while(temp != null){
-            System.out.print(temp.data+"--> ");
+            System.out.print(temp.val+ " -> ");
             temp = temp.next;
         }
         System.out.print("null");
     }
-    //Method for getting length of the list
-    int length(){
-        ListNode temp = head;
-        int count = 0;
-        if(head == null){
-            return 0;
+    private class Node{
+        private int val;
+        private Node next;
+        Node(int val){
+            this.val = val;
         }
-        while(temp != null){
-            count++;
-            temp = temp.next;
+        Node(int val, Node next){
+            this.val = val;
+            this.next = next;
         }
-        return count;
-    }
-    //method where you add element at the start of the list
-    void addFirst(int val){
-        ListNode newNode = new ListNode(val);
-        newNode.next = head;
-        head = newNode;
-    }
-    //Method where you add element at the end of the list
-    void addLast(int val){
-        ListNode newNode = new ListNode(val);
-        if(head == null){
-            head = newNode;
-            return;
-        }
-        ListNode current = head;
-        while(null != current.next){
-            current = current.next;
-        }
-        current.next = newNode;
-    }
-    public static void main(String[] args) {
-        SinglyLinkedList sll = new SinglyLinkedList();
-        ListNode second = new ListNode(4);
-        ListNode third = new ListNode(3);
-        ListNode fourth = new ListNode(7);
-        sll.head = new ListNode(5);
-        sll.head.next = second;
-        second.next = third;
-        third.next = fourth;
-        sll.printList();
-        System.out.println("\n"+"List length: "+sll.length());
-        sll.addFirst(6);
-        sll.addLast(10);
-        sll.printList();
     }
 }
