@@ -10,6 +10,31 @@ public class DLL {
        }
        head = node;
    }
+   public void insertLast(int val){
+       Node node = new Node(val);
+       Node last = head;
+       node.next = null;
+       if(head == null){
+           node.prev = null;
+           head = node;
+           return;
+       }
+       while(last.next != null){
+           last = last.next;
+       }
+       last.next = node;
+       node.prev = last;
+   }
+   public void insert(int after, int val){
+       Node node = new Node(val);
+       Node p = find(after);
+       node.next = p.next;
+       p.next = node;
+       node.prev = p;
+
+
+   }
+
   public void display(){
        Node node = head;
        Node last =  null;
@@ -28,21 +53,16 @@ public class DLL {
       System.out.print("START");
       System.out.println();
   }
-  public void addLast(int val){
-       Node node = new Node(val);
-       Node last = head;
-       node.next = null;
-       if(head == null){
-           node.prev = null;
-           head = node;
-           return;
+  public Node find(int value){
+       Node temp = head;
+       while(temp != null){
+           if(temp.val == value){
+               return temp;
+           }
+           temp = temp.next;
        }
-       while(last.next != null){
-           last = last.next;
-       }
-       last.next = node;
-       node.prev = last;
-   }
+       return null;
+  }
     private class Node{
         int val;
         Node next;
